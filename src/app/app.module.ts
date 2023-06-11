@@ -8,13 +8,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { SelectUserComponent } from './shared/components/select-user/select-user.component';
+import { NumberValidationDirective } from './shared/directives/number-validation.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
     DropdownDirective,
-    FilterPipe
+    FilterPipe,
+    SelectUserComponent,
+    NumberValidationDirective
   ],
   imports: [
     BrowserModule,

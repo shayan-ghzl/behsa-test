@@ -1,0 +1,22 @@
+:host{
+    &.ng-valid{
+        button{
+            --bs-btn-color: #198754;
+            --bs-btn-border-color: #198754;
+        }
+    }
+    &.ng-invalid{
+        button{
+            --bs-btn-color: #dc3545;
+            --bs-btn-border-color: #dc3545;
+        }
+    }
+}
+.dropdown{
+    width: 100%;
+    .dropdown-menu{
+        width: 100%;
+        max-height: 258px;
+        overflow: hidden auto;
+    }
+}

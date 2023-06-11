@@ -1,8 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs';
 import { IUser } from '../shared/models/models';
 import { ApiService } from '../shared/services/api.service';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -12,12 +12,11 @@ import { map } from 'rxjs';
 })
 export class RegisterComponent implements AfterViewInit{
 
-  today!: string;
-  todayJalali!: string;
-  printJsonValue = {};
+  @ViewChild('autoFocus') autoFocus!: ElementRef<HTMLInputElement>;
 
   customerForm = new FormGroup({
-    onlyNumbers: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern(/^[0-9]{3,12}$/i)]),
+    // onlyNumbers: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern(/^[0-9\u06F0-\u06F9]{3,12}$/)]),
+    onlyNumbers: new FormControl({ value: '', disabled: false }, [Validators.required]),
     onlyPersianChars: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern(/^[\u0627-\u06cc\s]{3,32}$/)]),
     selectUserOne: new FormControl<IUser | null>({ value: null, disabled: false }, [Validators.required]),
     selectUserTwo: new FormControl<IUser | null>({ value: null, disabled: false }, [Validators.required]),
@@ -27,32 +26,13 @@ export class RegisterComponent implements AfterViewInit{
     map(x => x.users)
   );
 
-  userOneSearch = '';
-  userTwoSearch = '';
-
   constructor(
     private apiService: ApiService
   ){
   }
 
   ngAfterViewInit(): void {
-   
-  }
-
-  onDropdownShow(dropdownSearchInput: HTMLInputElement){
-    this.userOneSearch = '';
-    this.userTwoSearch = '';
-    dropdownSearchInput.focus(); 
-  }
-
-  selectUserOne(user: IUser){
-    this.customerForm.patchValue({'selectUserOne': user}, { emitEvent: true });
-    this.userOneSearch = '';
-  }
-
-  selectUserTwo(user: IUser){
-    this.customerForm.patchValue({'selectUserTwo': user}, { emitEvent: true });
-    this.userTwoSearch = '';
+    this.autoFocus.nativeElement.focus();
   }
   
   @HostListener('document:keyup.enter')

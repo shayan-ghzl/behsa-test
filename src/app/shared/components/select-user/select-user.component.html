@@ -1,0 +1,18 @@
+<div class="component-container">
+    <div class="dropdown" appDropdown #exportedDropdown="exportAppDropdown" (dropdownShowed)="onDropdownShow(searchInput)">
+        <button 
+         class="btn btn-outline-secondary btn-block btn-sm dropdown-toggle"
+         type="button"
+         id="select-user-dropdown"
+         [attr.aria-expanded]="exportedDropdown.isShow" (click)="exportedDropdown.toggle()">
+            Select User (selected item: {{ (user) ? user.firstName + ' ' + user.lastName : 'not selected'}})
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="select-user-dropdown">
+            <li class="dropdown-item search-input">
+                <input type="text" class="form-control form-control-sm" #searchInput [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="dropdown-item" *ngFor="let user of (users | filter : search : ['firstName', 'lastName'])" (click)="selectUser(user); exportedDropdown.close();">{{user.firstName + ' ' + user.lastName}}</li>
+        </ul>
+    </div>
+</div>

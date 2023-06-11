@@ -5,7 +5,7 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
   selector: '[appNumberValidation]',
   providers: [{provide: NG_VALIDATORS, useExisting: NumberValidationDirective, multi: true}]
 })
-export class NumberValidationDirective  implements Validator{
+export class NumberValidationDirective implements Validator{
 
   validate(control: AbstractControl<any, any>): ValidationErrors | null {
     let status = false;
@@ -15,8 +15,4 @@ export class NumberValidationDirective  implements Validator{
     return (status) ? null : {'numberCustomValidation': 'only numbers are allowed'};
   }
   
-  // registerOnValidatorChange?(fn: () => void): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
 }

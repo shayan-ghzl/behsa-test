@@ -16,7 +16,7 @@ export class RegisterComponent implements AfterViewInit{
 
   customerForm = new FormGroup({
     // onlyNumbers: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern(/^[0-9\u06F0-\u06F9]{3,12}$/)]),
-    onlyNumbers: new FormControl({ value: '', disabled: false }, [Validators.required]),
+    onlyNumbers: new FormControl({ value: '', disabled: false }),
     onlyPersianChars: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.pattern(/^[\u0627-\u06cc\s]{3,32}$/)]),
     selectUserOne: new FormControl<IUser | null>({ value: null, disabled: false }, [Validators.required]),
     selectUserTwo: new FormControl<IUser | null>({ value: null, disabled: false }, [Validators.required]),

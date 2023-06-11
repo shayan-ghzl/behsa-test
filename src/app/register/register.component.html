@@ -1,0 +1,86 @@
+<div class="component-container shadow-sm">
+    <div class="form-container">
+        <form [formGroup]="customerForm" (ngSubmit)="submit()" autocomplete="off">
+
+            <!-- first input -->
+            <div class="form-field">
+                <label class="form-label">Only Numbers *</label>
+                <input class="form-control form-control-sm has-validation"
+                    type="text"
+                    autocomplete="off"
+                    formControlName="onlyNumbers"
+                    #autoFocus>
+                <small class="invalid-feedback">
+                    From 3 to 12 digits are allowed
+                </small>
+            </div>
+
+            <!-- second input -->
+            <div class="form-field">
+                <label class="form-label">Only Persian characters *</label>
+                <input class="form-control form-control-sm has-validation"
+                    type="text"
+                    autocomplete="off"
+                    formControlName="onlyPersianChars">
+                <small class="invalid-feedback">
+                    From 3 to 32 characters are allowed
+                </small>
+            </div>
+
+            <!-- third & fourth input -->
+            <ng-container *ngTemplateOutlet="dropDownsTemplate; context:{$implicit: userList$ | async}"></ng-container>
+            
+            <button type="submit" class="btn btn-sm btn-primary btn-block" [disabled]="customerForm.invalid">Submit</button>  
+        </form>  
+    </div>
+</div>
+
+<ng-template #dropDownsTemplate let-users>
+    <!-- third input -->
+    <div class="form-field">
+        <label class="form-label">Select User One *</label>
+        <div class="dropdown" appDropdown #exportedAppDropdown="exportAppDropdown" (dropdownShowed)="onDropdownShow(userOneSearchInput)">
+            <button 
+             class="btn btn-outline-secondary btn-block btn-sm dropdown-toggle"
+             [ngClass]="{'ng-invalid': customerForm.controls['selectUserOne'].invalid, 'ng-valid': customerForm.controls['selectUserOne'].valid}"
+             type="button"
+             id="userOneDropdown"
+             [attr.aria-expanded]="exportedAppDropdown.isShow" (click)="exportedAppDropdown.toggle()">
+                Select User One (selected item: 
+                <ng-container *ngIf="customerForm.controls['selectUserOne'].value as user;else notSelected">{{user.firstName}}</ng-container>
+                <ng-template #notSelected>not selected</ng-template>)
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userOneDropdown">
+                <li class="dropdown-item search-input">
+                    <input type="text" class="form-control form-control-sm" #userOneSearchInput [(ngModel)]="userOneSearch" >
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li class="dropdown-item" *ngFor="let user of (users | filter : userOneSearch : ['firstName', 'lastName'])" (click)="selectUserOne(user); exportedAppDropdown.close();">{{user.firstName + ' ' + user.lastName}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- fourth input -->
+    <div class="form-field">
+        <label class="form-label">Select User Two *</label>
+        <div class="dropdown" appDropdown #exportedAppDropdownTwo="exportAppDropdown" (dropdownShowed)="onDropdownShow(userOneSearchInput)">
+            <button 
+             class="btn btn-outline-secondary btn-block btn-sm dropdown-toggle"
+             [ngClass]="{'ng-invalid': customerForm.controls['selectUserTwo'].invalid, 'ng-valid': customerForm.controls['selectUserTwo'].valid}"
+             type="button"
+             id="userTwoDropdown"
+             [attr.aria-expanded]="exportedAppDropdownTwo.isShow" (click)="exportedAppDropdownTwo.toggle()">
+                Select User Two (selected item: 
+                <ng-container *ngIf="customerForm.controls['selectUserTwo'].value as user;else notSelected">{{user.firstName}}</ng-container>
+                <ng-template #notSelected>not selected</ng-template>)
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userTwoDropdown">
+                <li class="dropdown-item search-input">
+                    <input type="text" class="form-control form-control-sm" #userOneSearchInput [(ngModel)]="userTwoSearch" >
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li class="dropdown-item" *ngFor="let user of (users | filter : userTwoSearch : ['firstName', 'lastName'])" (click)="selectUserTwo(user); exportedAppDropdownTwo.close();">{{user.firstName + ' ' + user.lastName}}</li>
+            </ul>
+        </div>
+    </div>
+</ng-template>

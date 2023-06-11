@@ -1,0 +1,36 @@
+.component-container{
+    padding: 24px;
+    max-width: 400px;
+    margin: 24px auto;
+    border: 1px solid #70707040;
+    border-radius: 6px;
+    background-color: var(--bs-gray-100);
+}
+.form-label {
+    font-weight: 600;
+}
+.form-control::placeholder {
+    opacity: 0.5;
+}
+.form-field{
+    margin-bottom: 16px;
+}
+.dropdown{
+    width: 100%;
+    .dropdown-menu{
+        width: 100%;
+        max-height: 258px;
+        overflow: hidden auto;
+    }
+}
+button.ng-invalid{
+    --bs-btn-color: #dc3545;
+    --bs-btn-border-color: #dc3545;
+}
+button.ng-valid{
+    --bs-btn-color: #198754;
+    --bs-btn-border-color: #198754;
+}
+button[type="submit"]{
+    margin-top: 2rem;
+}

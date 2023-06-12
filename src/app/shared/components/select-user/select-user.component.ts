@@ -22,7 +22,12 @@ export class SelectUserComponent implements ControlValueAccessor {
   @Output() searchValue = new EventEmitter<string>();
 
   user!: IUser;
-  search = '';
+  // search = '';
+
+  // constructor(
+  //   private cdr: ChangeDetectorRef
+  // ) {    
+  // }
 
   onChange = (user: IUser) => {};
   onTouched = () => {};
@@ -49,23 +54,29 @@ export class SelectUserComponent implements ControlValueAccessor {
     }
   }
 
-  selectUser(obj: IUser) {
+  selectUser(obj: IUser, searchInput: HTMLInputElement) {
     this.markAsTouched();
     if (!this.disabled) {
       this.user = obj;
       this.onChange(this.user);
-      this.search = '';
+      searchInput.value = '';
     }
   }
   
   onDropdownShow(searchInput: HTMLInputElement){
-    this.search = '';
+    searchInput.value = '';
     searchInput.focus(); 
   }
 
-  ngModelChange(text: string){
-    if(text.trim().length >= 3) {
-      this.searchValue.emit(text);
+  timeout: any;
+  searchChange(text: string){
+    if(this.filterByApi && text.trim().length >= 3) {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.searchValue.emit(text);
+        // this.cdr.detectChanges();
+      }, 500);
     }
   }
+
 }

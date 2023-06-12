@@ -9,10 +9,15 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="select-user-dropdown">
             <li class="dropdown-item search-input">
-                <input type="text" class="form-control form-control-sm" #searchInput [(ngModel)]="search" [ngModelOptions]="{standalone: true}" (ngModelChange)="ngModelChange($event)">
+                <!-- <input type="text" class="form-control form-control-sm" #searchInput [(ngModel)]="search" [ngModelOptions]="{standalone: true}" (ngModelChange)="ngModelChange($event)"> -->
+                <input type="text" class="form-control form-control-sm" #searchInput (input)="searchChange(searchInput.value)">
             </li>
             <li><hr class="dropdown-divider"></li>
-            <li class="dropdown-item" *ngFor="let user of (users | filter : (filterByApi) ? '' : search : ['firstName', 'lastName'])" (click)="selectUser(user); exportedDropdown.close();">{{user.firstName + ' ' + user.lastName}}</li>
+            <!-- we have two type of filtering through users 
+                1. with help of api
+                2. with help of a custom pipe named filter
+            and we are switching between these two by a true/false flag named filterByApi -->
+            <li class="dropdown-item" *ngFor="let user of ((filterByApi) ? users : users | filter : searchInput.value : ['firstName', 'lastName'])" (click)="selectUser(user, searchInput); exportedDropdown.close();">{{user.firstName + ' ' + user.lastName}}</li>
         </ul>
     </div>
 </div>

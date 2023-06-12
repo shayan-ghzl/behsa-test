@@ -37,6 +37,7 @@
             <!-- fourth input -->
             <div class="form-field">
                 <label class="form-label">Select User Two *</label>
+                <!-- use searchValue event with filterByApi=true if you are going to use an api to filter users -->
                 <app-select-user [users]="userListSecond$ | async" [filterByApi]="true" (searchValue)="searchValue($event)" formControlName="selectUserTwo"></app-select-user>
             </div>
 

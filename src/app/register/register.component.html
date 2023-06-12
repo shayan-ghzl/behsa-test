@@ -28,22 +28,17 @@
                 </small>
             </div>
 
-            <!-- third & fourth input -->
-            <ng-container *ngTemplateOutlet="dropDownsTemplate; context:{$implicit: userList$ | async}"></ng-container>
+            <!-- third input -->
+            <div class="form-field">
+                <label class="form-label">Select User One *</label>
+                <app-select-user [users]="userList$ | async" formControlName="selectUserOne"></app-select-user>
+            </div>
 
-            <ng-template #dropDownsTemplate let-users>
-                <!-- third input -->
-                <div class="form-field">
-                    <label class="form-label">Select User One *</label>
-                    <app-select-user [users]="users" formControlName="selectUserOne"></app-select-user>
-                </div>
-
-                <!-- fourth input -->
-                <div class="form-field">
-                    <label class="form-label">Select User Two *</label>
-                    <app-select-user [users]="users" formControlName="selectUserTwo"></app-select-user>
-                </div>
-            </ng-template>
+            <!-- fourth input -->
+            <div class="form-field">
+                <label class="form-label">Select User Two *</label>
+                <app-select-user [users]="userListSecond$ | async" [filterByApi]="true" (searchValue)="searchValue($event)" formControlName="selectUserTwo"></app-select-user>
+            </div>
 
             <button type="submit" class="btn btn-sm btn-primary btn-block" [disabled]="customerForm.invalid">Submit</button>  
         </form>  

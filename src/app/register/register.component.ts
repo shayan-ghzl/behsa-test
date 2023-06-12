@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { IUser } from '../shared/models/models';
 import { ApiService } from '../shared/services/api.service';
 
@@ -25,9 +25,11 @@ export class RegisterComponent implements AfterViewInit{
   userList$ = this.apiService.getUsers().pipe(
     map(x => x.users)
   );
+  userListSecond$: Observable<IUser[]> = of([]);
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private cdr: ChangeDetectorRef
   ){
   }
 
@@ -43,4 +45,16 @@ export class RegisterComponent implements AfterViewInit{
     console.log(this.customerForm.value);
     this.customerForm.reset();
   }
+
+  timeout: any;
+  searchValue(searchKey: string){
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.userListSecond$ = this.apiService.getUsers().pipe(
+        map(x => x.users.filter(x => (x.firstName + x.lastName).toLowerCase().includes(searchKey))),
+      );
+      this.cdr.detectChanges();
+    }, 500);
+  }
+
 }

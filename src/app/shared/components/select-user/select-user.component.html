@@ -9,10 +9,10 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="select-user-dropdown">
             <li class="dropdown-item search-input">
-                <input type="text" class="form-control form-control-sm" #searchInput [(ngModel)]="search" [ngModelOptions]="{standalone: true}">
+                <input type="text" class="form-control form-control-sm" #searchInput [(ngModel)]="search" [ngModelOptions]="{standalone: true}" (ngModelChange)="ngModelChange($event)">
             </li>
             <li><hr class="dropdown-divider"></li>
-            <li class="dropdown-item" *ngFor="let user of (users | filter : search : ['firstName', 'lastName'])" (click)="selectUser(user); exportedDropdown.close();">{{user.firstName + ' ' + user.lastName}}</li>
+            <li class="dropdown-item" *ngFor="let user of (users | filter : (filterByApi) ? '' : search : ['firstName', 'lastName'])" (click)="selectUser(user); exportedDropdown.close();">{{user.firstName + ' ' + user.lastName}}</li>
         </ul>
     </div>
 </div>

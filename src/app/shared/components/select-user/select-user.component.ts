@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IUser } from '../../models/models';
 
@@ -18,6 +18,9 @@ import { IUser } from '../../models/models';
 export class SelectUserComponent implements ControlValueAccessor {
 
   @Input() users: IUser[] | null = [];
+  @Input() filterByApi = false;
+  @Output() searchValue = new EventEmitter<string>();
+
   user!: IUser;
   search = '';
 
@@ -58,5 +61,11 @@ export class SelectUserComponent implements ControlValueAccessor {
   onDropdownShow(searchInput: HTMLInputElement){
     this.search = '';
     searchInput.focus(); 
+  }
+
+  ngModelChange(text: string){
+    if(text.trim().length >= 3) {
+      this.searchValue.emit(text);
+    }
   }
 }

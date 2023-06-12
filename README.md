@@ -7,10 +7,8 @@
 1. June 11, 2023 - form 22:00 to 23:30
 1. June 12, 2023 - form 07:10 to 08:20
 
-***
 ## Documents
-#### About branches
----
+### About branches
 We have three branchs:
 - **gh-pages**: for deployment stuff .  
 - **normal-select**: two simple select without any callback event .  
